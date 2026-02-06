@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-// 1. DỮ LIỆU CATEGORIES ĐẦY ĐỦ (Đã thêm ID 17, 18 và các id khác)
 let categories = [
   {
     "id": 7,
@@ -86,7 +85,6 @@ let categories = [
   }
 ];
 
-// 2. DỮ LIỆU PRODUCTS MẪU (Để test API lấy sản phẩm theo ID danh mục)
 let products = [
     { "id": 101, "name": "Áo sơ mi nam", "categoryId": 7 },
     { "id": 102, "name": "Quần tây", "categoryId": 7 },
@@ -95,9 +93,7 @@ let products = [
     { "id": 105, "name": "Sản phẩm thử nghiệm", "categoryId": 18 }
 ];
 
-// --- CÁC HÀM HTTP REQUEST ---
 
-// Get All + Query theo name
 app.get('/api/v1/categories', (req, res) => {
     const { name } = req.query;
     if (name) {
@@ -131,7 +127,7 @@ app.post('/api/v1/categories', (req, res) => {
     res.status(201).json(newCate);
 });
 
-// Edit (PUT)
+// Edit
 app.put('/api/v1/categories/:id', (req, res) => {
     const index = categories.findIndex(c => c.id === parseInt(req.params.id));
     if (index === -1) return res.status(404).json({ message: "Không tìm thấy để sửa" });
@@ -156,7 +152,6 @@ app.delete('/api/v1/categories/:id', (req, res) => {
     res.json({ message: "Xóa thành công", id: idToDelete });
 });
 
-// Get Products by Category ID
 app.get('/api/v1/categories/:id/products', (req, res) => {
     const catId = parseInt(req.params.id);
     const result = products.filter(p => p.categoryId === catId);
